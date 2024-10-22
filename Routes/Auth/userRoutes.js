@@ -232,17 +232,37 @@ router.put('/update-user-info', authenticateToken, async (req, res) => {
     }
 });
 
-// Protected route example - Get user profile
-router.get('/profile', authenticateToken, async (req, res) => {
+router.get('/users', async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password');
+        // const header = [
+        //     { Header: "TITLE", accessor: "title" },
+        //     { Header: "IMAGE", accessor: "image" },
+        //     { Header: "CATEGORY", accessor: "category.name" },
+        //     { Header: "TAGS", accessor: "tags[0].name" },
+        //     { Header: "STATUS", accessor: "status" },
+        //     { Header: "ACTIONS", accessor: "action-multi" },
+
+        // ];
+
+        const users = await User.find();
+        res.status(200).json({ success: true, message: "User Retrieved Successful", data: users });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+
+// Get a single post
+router.get('/profile/:id', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-        res.json({ success: true, data: user });
-    } catch (error) {
-        console.error('Error fetching profile:', error);
-        res.status(500).json({ success: false, message: 'Failed to fetch user profile' });
+        res.status(200).json({ success: true, message: "User retrieved successful", data: user });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
