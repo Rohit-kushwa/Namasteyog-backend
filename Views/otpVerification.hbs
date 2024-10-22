@@ -1,0 +1,80 @@
+<!-- views/otpVerification.hbs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .inner-box {
+            width: auto;
+            margin: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+        }
+
+        .content {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .otp {
+            font-weight: bold;
+            font-size: 20px;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <div class="inner-box">
+            <div class="header">
+                <h1>OTP Verification</h1>
+            </div>
+            <div class="content">
+                <p>Hi {{customerName}},</p>
+                <p>Thank you for registering with us!</p>
+                <p>Your One-Time Password (OTP) for verification is: <span class="otp">{{otp}}</span></p>
+                <p>Please enter this OTP in the application to complete your registration process.</p>
+                <p>This OTP is valid for 5 minutes.</p>
+            </div>
+            <div class="footer">
+                <p>&copy; 2024 NamasteYog. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
