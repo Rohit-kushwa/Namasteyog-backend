@@ -234,18 +234,25 @@ router.put('/update-user-info', authenticateToken, async (req, res) => {
 
 router.get('/users', async (req, res) => {
     try {
-        // const header = [
-        //     { Header: "TITLE", accessor: "title" },
-        //     { Header: "IMAGE", accessor: "image" },
-        //     { Header: "CATEGORY", accessor: "category.name" },
-        //     { Header: "TAGS", accessor: "tags[0].name" },
-        //     { Header: "STATUS", accessor: "status" },
-        //     { Header: "ACTIONS", accessor: "action-multi" },
-
-        // ];
+        const header = [
+            { Header: "USERNAME", accessor: "username" },
+            { Header: "EMAIL", accessor: "email" },
+            { Header: "PHONE", accessor: "phone" },
+            { Header: "FIRST NAME", accessor: "firstName" },
+            { Header: "LAST NAME", accessor: "lastName" },
+            { Header: "ADDRESS", accessor: "address.street" }, // You can customize this to show the full address if needed
+            { Header: "CITY", accessor: "address.city" },
+            { Header: "STATE", accessor: "address.state" },
+            { Header: "ZIP CODE", accessor: "address.zipCode" },
+            { Header: "COUNTRY", accessor: "address.country" },
+            { Header: "CREATED AT", accessor: "createdAt" },
+            { Header: "UPDATED AT", accessor: "updatedAt" },
+            // { Header: "STATUS", accessor: "isActive" }, // You might want to show this as a badge or similar in your UI
+            // { Header: "ACTIONS", accessor: "action-multi" }, // For buttons like Edit/Delete
+        ];
 
         const users = await User.find();
-        res.status(200).json({ success: true, message: "User Retrieved Successful", data: users });
+        res.status(200).json({ success: true, message: "User Retrieved Successful", data: users, header: header });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
@@ -255,12 +262,12 @@ router.get('/users', async (req, res) => {
 // Get a single post
 router.get('/profile/:id', authenticateToken, async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password');
+        const user = await User.findById(req.params.id).select('-password');     
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-        res.status(200).json({ success: true, message: "User retrieved successful", data: user });
+        res.status(200).json({ success: true, message: "User retrieved successful", data: user});
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }

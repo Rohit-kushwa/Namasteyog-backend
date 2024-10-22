@@ -68,6 +68,7 @@ app.use('/yogFaq', require('./Routes/yogFaqs'));
 app.use('/termsAndCondition', require('./Routes/termsAndCondition'));
 app.use('/privacyPolicy', require('./Routes/privacyPolicy'));
 app.use('/comparisonTable', require('./Routes/dynamicData/ComparisonTable/CT'));
+app.use('/appointments', require('./Routes/appointment'));
 
 
 
