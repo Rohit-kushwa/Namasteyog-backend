@@ -65,7 +65,58 @@ const UserSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
-    }
+    },
+
+    // Payment History
+    paymentHistory: [{
+        amount: Number,
+        paymentMethod: String,
+        status: {
+            type: String,
+            enum: ['pending', 'completed', 'failed'],
+            default: 'pending'
+        },
+        paymentDate: {
+            type: Date,
+            default: Date.now
+        },
+        orderId: String // Tracking order for payment
+    }],
+
+    // Package Details - Tracking purchased packages
+    purchasedPackages: [{
+        packageId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Package' // Reference to the Package model
+        },
+        purchaseDate: {
+            type: Date,
+            default: Date.now
+        },
+        expiryDate: Date
+    }],
+
+    // Booked Classes
+    bookedClasses: [{
+        classId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Class' // Reference to the Class model
+        },
+        bookingDate: {
+            type: Date,
+            default: Date.now
+        },
+        status: {
+            type: String,
+            enum: ['booked', 'completed', 'cancelled'],
+            default: 'booked'
+        }
+    }],
+
+    // Order IDs for tracking orders made by the user
+    orderIds: [{
+        type: String
+    }]
 });
 
 // Middleware to update `updatedAt` field
@@ -74,4 +125,4 @@ UserSchema.pre('save', function (next) {
     next();
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Users', UserSchema);
