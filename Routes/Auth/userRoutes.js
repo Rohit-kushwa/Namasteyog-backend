@@ -240,11 +240,7 @@ router.get('/users', async (req, res) => {
             { Header: "PHONE", accessor: "phone" },
             { Header: "FIRST NAME", accessor: "firstName" },
             { Header: "LAST NAME", accessor: "lastName" },
-            { Header: "ADDRESS", accessor: "address.street" }, // You can customize this to show the full address if needed
-            { Header: "CITY", accessor: "address.city" },
-            { Header: "STATE", accessor: "address.state" },
-            { Header: "ZIP CODE", accessor: "address.zipCode" },
-            { Header: "COUNTRY", accessor: "address.country" },
+            { Header: "ADDRESS", accessor: "address" }, // You can customize this to show the full address if needed
             { Header: "CREATED AT", accessor: "createdAt" },
             { Header: "UPDATED AT", accessor: "updatedAt" },
             // { Header: "STATUS", accessor: "isActive" }, // You might want to show this as a badge or similar in your UI
