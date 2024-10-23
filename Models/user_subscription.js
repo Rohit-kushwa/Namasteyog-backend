@@ -36,9 +36,13 @@ const userSubscriberSchema = new mongoose.Schema({
         },
         paymentMethod: {
             type: String,
-            enum: ['credit_card', 'paypal', 'bank_transfer'],
+            enum: ['credit_card', 'paypal', 'bank_transfer', 'razorpay', 'manual'],
             required: true,
         },
+        paymentId:{
+            type: String,
+            required: true
+        }
     },
     isDeleted: {
         type: Boolean,

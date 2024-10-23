@@ -146,15 +146,16 @@ router.put('/update-profile', authenticateToken, async (req, res) => {
         user.firstName = firstName || user.firstName;
         user.lastName = lastName || user.lastName;
         user.phone = phone || user.phone;
+        user.address = address || user.address;
 
         // Update address if provided
-        if (address) {
-            user.address.street = address.street || user.address.street;
-            user.address.city = address.city || user.address.city;
-            user.address.state = address.state || user.address.state;
-            user.address.zipCode = address.zipCode || user.address.zipCode;
-            user.address.country = address.country || user.address.country;
-        }
+        // if (address) {
+        //     user.address.street = address.street || user.address.street;
+        //     user.address.city = address.city || user.address.city;
+        //     user.address.state = address.state || user.address.state;
+        //     user.address.zipCode = address.zipCode || user.address.zipCode;
+        //     user.address.country = address.country || user.address.country;
+        // }
 
         // Save the updated user
         await user.save();
