@@ -47,7 +47,7 @@ router.get('/', authenticateToken, checkRole(['admin']), async (req, res) => {
       { Header: "START DATE", accessor: "startDate" },
       { Header: "END DATE", accessor: "endDate" },
       { Header: "STATUS", accessor: "status-2" },
-      { Header: "PLAN", accessor: "plan" },
+      // { Header: "PLAN", accessor: "plan" },
       { Header: "ACTION", accessor: "action-subscriber" },
     ];
 

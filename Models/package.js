@@ -14,6 +14,10 @@ const PackageSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    discountPrice: {
+        type: Number,
+        required: true
+    },
     durationMonths: {
         type: Number,
         required: true

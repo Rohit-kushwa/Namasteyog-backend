@@ -112,8 +112,7 @@ router.get('/', authenticateToken, async (req, res) => {
             { Header: "ORDER NO", accessor: "orderId" },
             { Header: "CUSTOMER", accessor: "customerId.username" },
             { Header: "STREET ADDRESS", accessor: "shippingDetails.streetAddress" },
-            { Header: "SHIPPING CITY", accessor: "shippingDetails.city" },
-            
+            { Header: "SHIPPING CITY", accessor: "shippingDetails.city" },  
             { Header: "PAYMENT MODE", accessor: "paymentDetails.paymentMethod" },
             { Header: "TOTAL", accessor: "cartId.subTotalDiscount" },
             { Header: "STATUS", accessor: "status" },
