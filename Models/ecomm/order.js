@@ -13,8 +13,11 @@ const OrderSchema = new mongoose.Schema({
     },
     cartId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'Cart', // Assuming you have a Cart model
+    },
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product', // Assuming you have a Cart model
     },
     paymentDetails: {
         amount: {
@@ -27,7 +30,7 @@ const OrderSchema = new mongoose.Schema({
         },
         paymentMethod: {
             type: String,
-            enum: ['credit_card', 'paypal', 'bank_transfer', 'razorpay', 'cash'],
+            enum: ['credit_card', 'paypal', 'bank_transfer', 'razorpay', 'cod'],
             required: true,
         },
         paymentId:{

@@ -37,6 +37,7 @@ app.use('/video/videos', express.static('Public/video'))
 app.use('/image/testimonialFirst', express.static('Public/testimonialFirst'))
 app.use('/image/testimonialSecond', express.static('Public/testimonialSecond'))
 app.use('/image/discountBannerImage', express.static('Public/discountBannerImage'))
+app.use('/image/ecomBGImage', express.static('Public/ecomBGImage'))
 
 
 // Routes
@@ -69,6 +70,7 @@ app.use('/termsAndCondition', require('./Routes/termsAndCondition'));
 app.use('/privacyPolicy', require('./Routes/privacyPolicy'));
 app.use('/comparisonTable', require('./Routes/dynamicData/ComparisonTable/CT'));
 app.use('/appointments', require('./Routes/appointment'));
+app.use('/ecomm/bg-text', require('./Routes/ecomm/bg_text'));
 
 
 

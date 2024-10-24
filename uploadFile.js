@@ -199,6 +199,30 @@ const uploadDiscountBannerImage = multer({
   }
 });
 
+const storageEcomBGImage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = path.join(__dirname, './Public/ecomBGImage');
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const filetypes = /jpeg|jpg|png|webp|avif/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (extname) {
+      cb(null, `${Date.now()}_${file.originalname}`);
+    } else {
+      cb(new Error('Error: only .jpeg, .jpg, .png files are allowed!'));
+    }
+  }
+});
+
+const uploadEcomBGImage = multer({
+  storage: storageEcomBGImage,
+  limits: {
+    fileSize: 1024 * 1024 * 5 // 5MB limit
+  }
+});
+
 module.exports = {
     uploadCategory, 
     uploadProduct,
@@ -207,5 +231,6 @@ module.exports = {
     uploadInstructor,
     uploadTestimonial,
     uploadTestimonialSecond,
+    uploadEcomBGImage,
     uploadDiscountBannerImage
 };

@@ -21,7 +21,7 @@ router.post('/', authenticateToken, checkRole(['admin']), async (req, res) => {
 });
 
 // Get all packages
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const packages = await Package.find();
     res.status(200).json({ success: 'Retrieved Data Successful', data: packages });

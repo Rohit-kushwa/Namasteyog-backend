@@ -46,6 +46,7 @@ router.post('/', authenticateToken, async (req, res) => {
             orderId: orderId,
             customerId: req.body.customerId,
             cartId: req.body.cartId, // Include cartId from the request
+            productId: req.body.productId,
             paymentDetails,
             shippingDetails, // Include shipping details
         });

@@ -111,7 +111,8 @@ const UserSchema = new mongoose.Schema({
 
     // Order IDs for tracking orders made by the user
     orderIds: [{
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order' // Reference to the Class model
     }]
 });
 

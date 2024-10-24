@@ -15,7 +15,6 @@ const AppointmentSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: true
     },
     message: {
         type: String,

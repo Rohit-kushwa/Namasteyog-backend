@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto'); // For generating OTP
 const generateToken = require('../../Utils/jwtUtils');
 const User = require('../../Models/auth/user');
+const Packages = require('../../Models/package');
 const router = express.Router();
 const transporter = require('../../Utils/mailer'); // Import your mailer transporter
 // Middleware for protecting routes (authorization)
@@ -171,11 +172,10 @@ router.put('/update-profile', authenticateToken, async (req, res) => {
     }
 });
 
-
 // Update Packages, Payment History, and Classes
 router.put('/update-user-info', authenticateToken, async (req, res) => {
     const userId = req.user.id; // Assuming `authenticateToken` middleware adds user info to the request
-    const { purchasedPackages, paymentHistory, bookedClasses } = req.body;
+    const { purchasedPackages, paymentHistory, bookedClasses, orderIds } = req.body; // Changed orderId to orderIds
 
     try {
         // Find the user by ID
@@ -184,15 +184,33 @@ router.put('/update-user-info', authenticateToken, async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
+        const getPackageById = async (packageId) => {
+            // Replace this with your actual database call to get the package
+            return await Packages.findById(packageId);
+        };
+
         // Update purchased packages if provided
         if (purchasedPackages) {
-            purchasedPackages.forEach((pkg) => {
-                user.purchasedPackages.push({
-                    packageId: pkg.packageId,
-                    purchaseDate: pkg.purchaseDate || Date.now(),
-                    expiryDate: pkg.expiryDate,
-                });
-            });
+            for (const pkg of purchasedPackages) {
+                const packageDetails = await getPackageById(pkg.packageId);
+
+                if (packageDetails) {
+                    const durationMonths = packageDetails.durationMonths || 0; // Get the duration in months
+                    const purchaseDate = pkg.purchaseDate || Date.now(); // Use provided purchase date or current date
+
+                    // Calculate expiryDate by adding the duration to purchaseDate
+                    const expiryDate = new Date(purchaseDate);
+                    expiryDate.setMonth(expiryDate.getMonth() + durationMonths); // Add duration in months
+
+                    user.purchasedPackages.push({
+                        packageId: pkg.packageId,
+                        purchaseDate: purchaseDate,
+                        expiryDate: expiryDate,
+                    });
+                } else {
+                    console.log(`Package with ID ${pkg.packageId} not found.`);
+                }
+            }
         }
 
         // Update payment history if provided
@@ -216,6 +234,13 @@ router.put('/update-user-info', authenticateToken, async (req, res) => {
                     bookingDate: cls.bookingDate || Date.now(),
                     status: cls.status || 'booked',
                 });
+            });
+        }
+
+        // Update Ordered Products if provided
+        if (orderIds) { // Changed from orderId to orderIds
+            orderIds.forEach((orderId) => {
+                user.orderIds.push(orderId); // Push the orderId directly
             });
         }
 
@@ -259,12 +284,12 @@ router.get('/users', async (req, res) => {
 // Get a single post
 router.get('/profile/:id', authenticateToken, async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password');     
+        const user = await User.findById(req.params.id).select('-password');
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-        res.status(200).json({ success: true, message: "User retrieved successful", data: user});
+        res.status(200).json({ success: true, message: "User retrieved successful", data: user });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
